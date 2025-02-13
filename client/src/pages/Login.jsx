@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 const Login = () => {
   const navigate = useNavigate();
-  
+
   // handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,8 +15,15 @@ const Login = () => {
     const username = form.username.value;
     const password = form.password.value;
     const userData = { username, password };
-    console.log(userData);
-  
+    
+    // Validate password length
+    if (password > 5) {
+      Swal.fire({
+        title: "Password should be at least 5 characters long",
+        icon: "error",
+      });
+      return;
+    }
     // Send user data for login
     const response = await axios.post("http://localhost:5000/user", userData);
     if (response.data) {
@@ -47,7 +54,6 @@ const Login = () => {
               placeholder="Enter username"
               className="mt-1"
               required
-              defaultValue="teacher"
             />
           </div>
           <div>
@@ -57,7 +63,6 @@ const Login = () => {
               name="password"
               placeholder="Enter password"
               className="mt-1"
-              defaultValue="123456"
               required
             />
           </div>
