@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 
 const AllQuize = () => {
   // Fetch data from an API endpoint
+  const loggedInUser = JSON.parse(localStorage.getItem("username"));
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["allQuizes"], // Should be an array
     queryFn: async () => {
@@ -49,31 +50,52 @@ const AllQuize = () => {
     });
   };
 
+  // match the data base on the login users
+  const loginUserData = data?.filter(
+    (quize) => quize.userName === loggedInUser
+  );
   // edit data form database
   return (
     <div className="">
       <div className="px-5 my-5 md:px-10 md:my-8 lg:px-20 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4">
-        {data?.map((quize) => (
-          <div className="border p-5 rounded-md shadow-sm space-y-1" key={quize._id}>
-            <h1 className=""><span className="font-bold">Quize:</span> {quize.title}</h1>
-            <p> <span className="font-bold">Created Date: </span>{ quize.date}</p>
-            <p>{quize.description?.slice(0, 100)}...</p>
-            <div className="flex justify-end mt-2 space-x-3">
-              <Link
-                to={`/dashboard/update-quize/${quize._id}`}
-                className="bg-green-500 text-white flex items-center justify-center w-10 h-10 rounded-lg transition duration-300 hover:bg-green-600 shadow-md"
+        {loginUserData.length > 0 ? (
+          <>
+            {loginUserData?.map((quize) => (
+              <div
+                className="border p-5 rounded-md shadow-sm space-y-1"
+                key={quize._id}
               >
-                <BiMessageSquareEdit size={24} />
-              </Link>
-              <button
-                onClick={() => deleteQuize(quize._id)}
-                className="bg-red-500 text-white flex items-center justify-center w-10 h-10 rounded-lg transition duration-300 hover:bg-red-600 shadow-md"
-              >
-                <MdOutlineDelete size={24} />
-              </button>
-            </div>
-          </div>
-        ))}
+                <h1 className="">
+                  <span className="font-bold">Quize:</span> {quize.title}
+                </h1>
+                <p>
+                  {" "}
+                  <span className="font-bold">Created Date: </span>
+                  {quize.date}
+                </p>
+                <p>{quize.description?.slice(0, 100)}...</p>
+                <div className="flex justify-end mt-2 space-x-3">
+                  <Link
+                    to={`/dashboard/update-quize/${quize._id}`}
+                    className="bg-green-500 text-white flex items-center justify-center w-10 h-10 rounded-lg transition duration-300 hover:bg-green-600 shadow-md"
+                  >
+                    <BiMessageSquareEdit size={24} />
+                  </Link>
+                  <button
+                    onClick={() => deleteQuize(quize._id)}
+                    className="bg-red-500 text-white flex items-center justify-center w-10 h-10 rounded-lg transition duration-300 hover:bg-red-600 shadow-md"
+                  >
+                    <MdOutlineDelete size={24} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </>
+        ) : (
+          <>
+            <p className="text-xl font-semibold">No quizzes available.</p>
+          </>
+        )}
       </div>
     </div>
   );

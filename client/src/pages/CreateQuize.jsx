@@ -15,7 +15,10 @@ const CreateQuize = () => {
     const title = form.title.value;
     const description = form.description.value;
     const date = new Date().toISOString().split('T')[0]
-    const formData = { title, description, date};
+    // get the user form local storage
+    const loggedInUser = JSON.parse(localStorage.getItem('username'))
+    const userName = loggedInUser;
+    const formData = { title, description, date, userName };
     axios.post("http://localhost:5000/quiz", formData)
       .then(res => {
         if (res.data.result.insertedId) {

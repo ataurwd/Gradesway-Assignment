@@ -1,49 +1,38 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { FaUser } from "react-icons/fa";
 
 const Login = () => {
-  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-
-  // get user data from the database
-  const fetchData = async () => {
-    const response = await axios.get("http://localhost:5000/user");
-    setUsers(response.data);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+  
   // handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const username = form.username.value;
     const password = form.password.value;
-    const foundUser = users.find(
-      (user) => user.user === username && user.password === password
-    );
-
-    // navigate to the dashboard if login is successful, otherwise show error message
-    if (foundUser) {
+    const userData = { username, password };
+    console.log(userData);
+  
+    // Send user data for login
+    const response = await axios.post("http://localhost:5000/user", userData);
+    if (response.data) {
+      // Only save the username to localStorage
+      localStorage.setItem('username', JSON.stringify(username));
+  
       Swal.fire({
         title: "Login successful!",
         icon: "success",
       });
+  
+      // Redirect to dashboard
       navigate("/dashboard/all-quize");
-    } else {
-      Swal.fire({
-        title: "Invalid username or password!",
-        icon: "error",
-      });
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">

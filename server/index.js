@@ -28,6 +28,14 @@ async function run() {
      const userDatabase = client.db("Gradesway").collection("users")
      const quizeDatabase = client.db("Gradesway").collection("quizes") 
 
+    // post user data to the database
+     app.post('/user', async (req, res) => {
+        const user = req.body;
+        const result = await userDatabase.insertOne(user);
+        res.send(result);
+     });
+
+    
      // get user data from database
      app.get('/user', async (req, res) => {
       try {
