@@ -1,15 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const CreateQuize = () => {
+  const navigate = useNavigate()
   const handelFormSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
     const description = form.description.value;
     const formData = { title, description };
-    console.log(formData);
+    axios.post("http://localhost:5000/quiz", formData)
+      .then(res => {
+        if (res.data.result.insertedId) {
+          Swal.fire({
+            title: "Create Quize success!",
+            icon: "success"
+          })
+        }
+        // reset the form
+        form.reset();
+        navigate("/dashboard/all-quize")
+    })
   };
 
   return (

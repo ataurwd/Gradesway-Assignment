@@ -26,6 +26,9 @@ async function run() {
 
      // to create database
      const userDatabase = client.db("Gradesway").collection("users")
+     const quizeDatabase = client.db("Gradesway").collection("quizes") 
+
+     // get user data from database
      app.get('/user', async (req, res) => {
       try {
         const result = await userDatabase.find({}).toArray();
@@ -33,8 +36,29 @@ async function run() {
       } catch (error) {
         res.status(500).send({ message: "Error fetching users", error });
       }
-    });
+     });
      
+     // post quize to the database
+     app.post('/quiz', async (req, res) => {
+      try {
+        const user = req.body;
+        const result = await quizeDatabase.insertOne(user);
+        res.status(201).send({ message: "User created successfully", result });
+      } catch (error) {
+        res.status(500).send({ message: "Error creating user", error });
+      }
+     });
+     
+
+     // get quiz data from database
+     app.get('/quizs', async (req, res) => {
+      try {
+        const result = await quizeDatabase.find({}).toArray();
+        res.send(result); // ✅ Fixed: Changed req.send() to res.send()
+      } catch (error) {
+        res.status(500).send({ message: "Error fetching quizes", error });
+      }
+     });
 
 
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
