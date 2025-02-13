@@ -19,6 +19,7 @@ const Login = () => {
     fetchData();
   }, []);
 
+  // handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -28,6 +29,7 @@ const Login = () => {
       (user) => user.user === username && user.password === password
     );
 
+    // navigate to the dashboard if login is successful, otherwise show error message
     if (foundUser) {
       Swal.fire({
         title: "Login successful!",

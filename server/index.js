@@ -54,7 +54,7 @@ async function run() {
      app.get('/quizs', async (req, res) => {
       try {
         const result = await quizeDatabase.find({}).toArray();
-        res.send(result); // ✅ Fixed: Changed req.send() to res.send()
+        res.send(result); 
       } catch (error) {
         res.status(500).send({ message: "Error fetching quizes", error });
       }
