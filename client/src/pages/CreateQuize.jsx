@@ -7,12 +7,15 @@ import Swal from "sweetalert2";
 
 const CreateQuize = () => {
   const navigate = useNavigate()
+
+  // 
   const handelFormSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
     const description = form.description.value;
-    const formData = { title, description };
+    const date = new Date().toISOString().split('T')[0]
+    const formData = { title, description, date};
     axios.post("http://localhost:5000/quiz", formData)
       .then(res => {
         if (res.data.result.insertedId) {
@@ -28,8 +31,9 @@ const CreateQuize = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-md w-96">
+    <div className="flex overflow-x-hidden items-center justify-center h-screen bg-gray-100">
+      <div className="bg-white p-6 rounded-lg shadow-md md:w-[500px] w-full">
+        <h1 className="text-center font-bold mb-5">Create Quize For Student</h1>
         <form onSubmit={handelFormSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium">Quize Title</label>
@@ -49,10 +53,11 @@ const CreateQuize = () => {
               className="mt-1"
               required
               name="description"
+               rows="5"
             />
           </div>
           <Button type="submit" className="w-full">
-            Create Quize
+            Create 
           </Button>
         </form>
       </div>

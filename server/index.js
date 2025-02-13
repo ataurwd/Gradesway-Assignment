@@ -60,6 +60,38 @@ async function run() {
       }
      });
 
+     // get quiz data base on id 
+     app.get('/quizs/:id', async (req, res) => {
+      try {
+        const id = new ObjectId(req.params.id);
+        const result = await quizeDatabase.findOne({ _id: id });
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Error fetching quiz", error });
+      }
+     });
+     
+     // delte quiz data from database
+     app.delete('/quizs/:id', async (req, res) => {
+        const id = new ObjectId(req.params.id);
+        const result = await quizeDatabase.deleteOne({ _id: id });
+        res.send(result);
+     });
+
+     // update data from database
+     app.put('/quizs/:id', async (req, res) => {
+      const id = new ObjectId(req.params.id);
+      const updateData = req.body; // Only update provided fields
+  
+      const result = await quizeDatabase.updateOne(
+          { _id: id },
+          { $set: updateData }
+      );
+      res.send(result);
+  });
+  
+  
+
 
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {

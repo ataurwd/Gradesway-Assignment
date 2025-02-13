@@ -4,10 +4,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { FaUser } from "react-icons/fa";
 
 const Login = () => {
   const [users, setUsers] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // get user data from the database
   const fetchData = async () => {
@@ -33,21 +34,21 @@ const Login = () => {
     if (foundUser) {
       Swal.fire({
         title: "Login successful!",
-        icon: "success"
+        icon: "success",
       });
       navigate("/dashboard/all-quize");
     } else {
       Swal.fire({
         title: "Invalid username or password!",
         icon: "error",
-      })
+      });
     }
   };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-semibold text-center mb-4">Login</h2>
+        <h2 className="text-2xl font-semibold text-center mb-4">Login Now</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium">Username</label>
@@ -72,6 +73,7 @@ const Login = () => {
             />
           </div>
           <Button type="submit" className="w-full">
+            <FaUser />
             Login
           </Button>
         </form>

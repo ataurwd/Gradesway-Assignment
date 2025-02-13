@@ -2,6 +2,7 @@ import AllQuize from "@/pages/AllQuize";
 import CreateQuize from "@/pages/CreateQuize";
 import Dashboard from "@/pages/Dashboard";
 import Login from "@/pages/Login";
+import UpdateQuize from "@/pages/UpdateQuize";
 import { RouterProvider } from "react-router";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -23,6 +24,11 @@ const Router = () => {
           path: "create-quize",
           element: <CreateQuize />,
         },
+        {
+          path: '/dashboard/update-quize/:id',
+          element: <UpdateQuize />,
+          loader: ({params}) => fetch(`http://localhost:5000/quizs/${params.id}`)
+        }
       ],
     },
   ]);
