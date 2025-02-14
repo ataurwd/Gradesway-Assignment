@@ -25,10 +25,11 @@ const Router = () => {
           element: <CreateQuize />,
         },
         {
-          path: '/dashboard/update-quize/:id',
+          path: "/dashboard/update-quize/:id",
           element: <UpdateQuize />,
-          loader: ({params}) => fetch(`http://localhost:5000/quizs/${params.id}`)
-        }
+          loader: ({ params }) =>
+            fetch(`https://job-assignment-1.vercel.app/quizs/${params.id}`),
+        },
       ],
     },
   ]);

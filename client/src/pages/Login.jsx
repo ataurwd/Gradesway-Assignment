@@ -15,9 +15,9 @@ const Login = () => {
     const username = form.username.value;
     const password = form.password.value;
     const userData = { username, password };
-    
+
     // Validate password length
-    if (password > 5) {
+    if (password <= 5) {
       Swal.fire({
         title: "Password should be at least 5 characters long",
         icon: "error",
@@ -25,21 +25,23 @@ const Login = () => {
       return;
     }
     // Send user data for login
-    const response = await axios.post("http://localhost:5000/user", userData);
+    const response = await axios.post(
+      "https://job-assignment-1.vercel.app/user",
+      userData
+    );
     if (response.data) {
       // Only save the username to localStorage
-      localStorage.setItem('username', JSON.stringify(username));
-  
+      localStorage.setItem("username", JSON.stringify(username));
+
       Swal.fire({
         title: "Login successful!",
         icon: "success",
       });
-  
+
       // Redirect to dashboard
       navigate("/dashboard/all-quize");
     }
   };
-  
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">

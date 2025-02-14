@@ -6,31 +6,32 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const CreateQuize = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  // 
+  //
   const handelFormSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
     const description = form.description.value;
-    const date = new Date().toISOString().split('T')[0]
+    const date = new Date().toISOString().split("T")[0];
     // get the user form local storage
-    const loggedInUser = JSON.parse(localStorage.getItem('username'))
+    const loggedInUser = JSON.parse(localStorage.getItem("username"));
     const userName = loggedInUser;
     const formData = { title, description, date, userName };
-    axios.post("http://localhost:5000/quiz", formData)
-      .then(res => {
+    axios
+      .post("https://job-assignment-1.vercel.app/quiz", formData)
+      .then((res) => {
         if (res.data.result.insertedId) {
           Swal.fire({
             title: "Create Quize success!",
-            icon: "success"
-          })
+            icon: "success",
+          });
         }
         // reset the form
         form.reset();
-        navigate("/dashboard/all-quize")
-    })
+        navigate("/dashboard/all-quize");
+      });
   };
 
   return (
@@ -50,17 +51,17 @@ const CreateQuize = () => {
           </div>
           <div>
             <label className="block text-sm font-medium">Description</label>
-            <Textarea 
+            <Textarea
               type="text"
               placeholder="Quize Description Here..."
               className="mt-1"
               required
               name="description"
-               rows="5"
+              rows="5"
             />
           </div>
           <Button type="submit" className="w-full">
-            Create 
+            Create
           </Button>
         </form>
       </div>

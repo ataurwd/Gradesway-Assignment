@@ -23,7 +23,7 @@ const UpdateQuize = () => {
     // update the data from databaes
     try {
       const response = await axios.put(
-        `http://localhost:5000/quizs/${id}`,
+        `https://job-assignment-1.vercel.app/quizs/${id}`,
         updatedData
       );
 

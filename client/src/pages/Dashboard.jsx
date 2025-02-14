@@ -30,7 +30,7 @@ const Dashboard = () => {
         <NavLink
           to={"all-quize"}
           className={({ isActive }) =>
-            `flex items-center py-3 px-5 my-2 bg-white rounded-md ${isActive ? "text-white bg-[#0F172A]" : "text-black"} ${
+            `flex items-center py-3 px-5 my-2 bg-white rounded-md ${isActive ? "text-green-500 font-semibold bg-[#0F172A]" : "text-black"} ${
               isCollapsed ? "justify-center" : "md:ml-5"
             }`
           }
@@ -43,7 +43,7 @@ const Dashboard = () => {
         <NavLink
           to={"create-quize"}
           className={({ isActive }) =>
-            `flex items-center py-3 px-5 my-1 bg-white rounded-md ${isActive ? "text-white bg-[#0F172A]" : "text-black"} ${
+            `flex items-center py-3 px-5 my-1 bg-white rounded-md ${isActive ? "text-green-500 font-semibold bg-[#0F172A]" : "text-black"} ${
               isCollapsed ? "justify-center" : "md:ml-5"
             }`
           }

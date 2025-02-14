@@ -11,7 +11,9 @@ const AllQuize = () => {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["allQuizes"], // Should be an array
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/quizs");
+      const response = await axios.get(
+        "https://job-assignment-1.vercel.app/quizs"
+      );
       return response.data;
     },
   });
@@ -33,7 +35,7 @@ const AllQuize = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const response = await axios.delete(
-          `http://localhost:5000/quizs/${id}`
+          `https://job-assignment-1.vercel.app/quizs/${id}`
         );
 
         if (response.data.deletedCount > 0) {
