@@ -1,6 +1,7 @@
 import AllQuize from "@/pages/AllQuize";
 import CreateQuize from "@/pages/CreateQuize";
 import Dashboard from "@/pages/Dashboard";
+import ErrorPage from "@/pages/ErrorPage";
 import Login from "@/pages/Login";
 import UpdateQuize from "@/pages/UpdateQuize";
 import { RouterProvider } from "react-router";
@@ -11,6 +12,7 @@ const Router = () => {
     {
       path: "/",
       element: <Login />,
+      errorElement: <ErrorPage/>,
     },
     {
       path: "/dashboard",
